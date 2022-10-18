@@ -3,6 +3,8 @@
 ## Get session id in Apex throw VF page
 [Source](https://github.com/EugeneSheuchuk/SFDCHelp/tree/master/VF_SessionId)
 
+## Create PDF file from VF page, attach it to the record and return contentDocumentId
+
 ## Apex help methods
 
 #### - getRelatedRecordField

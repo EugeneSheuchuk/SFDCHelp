@@ -1,0 +1,382 @@
+<apex:page sidebar="false" showHeader="false" applyBodyTag="false" controller="NewQuotePDFCtrl" renderAs="pdf">
+<!-- <apex:page sidebar="false" showHeader="false" applyBodyTag="false" controller="NewQuotePDFCtrl"> -->
+    <head>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .imgContainer {
+                margin-bottom: 30px;
+            }
+
+            h1 {
+                display: block;
+                font-size: 25px;
+                line-height: 22px;
+                color: #161616;
+            }
+
+            table td {
+                font-size: 14px;
+                padding: 12px 14px;
+                line-height: 22px;
+            }
+
+            table .col-1 {                
+                color: #ffffff;
+                font-weight: bold;                
+                background-color: #4d4f53;
+                width: 256px;
+                border: 1px solid 9c9d9f;
+            }
+
+            table .col-1 .smallLabel {
+                font-size: 12px;
+            }
+
+            table .col-2 {
+                color: #161616;
+                background-color: #f1f1f1;
+                width: 456px;       
+                border: 1px solid #f8f8f8;         
+            }
+
+            table tr:nth-child(even) .col-2 {
+                background-color: #e2e2e2;
+            }
+
+            p {
+                font-size: 14px;
+                line-height: 22px;
+                color: #000000;
+            }
+
+            .listInfo {
+            
+            }
+
+            .warningContainer {
+                border: 2px solid #dbdbdb;
+                padding: 14px 20px;
+            }
+
+            .warningContainer span {
+                display: block;
+                font-size: 14px;
+                line-height: 22px;
+                color: #000000;
+                font-weight: bold;
+            }
+
+            .footerInfo {
+                font-size: 14px;
+                line-height: 24px;
+                color: #7b7b7b;
+            }
+
+            ul li {
+                position: relative;
+                padding-left: 20px;
+            }
+
+            ul li .circle {
+                position: absolute;
+                display: block;
+                font-size: 50px;
+                line-height: 10px;
+                top: -10px;
+            }
+
+            .margin-bottom-10 {
+                margin-bottom: 10px;
+            }
+
+            .margin-bottom-20 {
+                margin-bottom: 20px;
+            }
+
+            .margin-bottom-30 {
+                margin-bottom: 30px;
+            }
+
+            .margin-bottom-40 {
+                margin-bottom: 40px;
+            }
+
+            .margin-bottom-50 {
+                margin-bottom: 50px;
+            }
+
+            .margin-bottom-80 {
+                margin-bottom: 80px;
+            }
+
+            .margin-bottom-120 {
+                margin-bottom: 120px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="imgContainer">
+                <apex:image url="{!$Resource.Toyota_Logo_PDF}" height="45"/>
+            </div>
+
+            <h1 class="margin-bottom-20">Quote Summary</h1>
+
+            <table class="margin-bottom-20">
+                <tr>
+                    <td class="col-1">Quote number</td>
+                    <td class="col-2">{!quoteNumber}</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Quote expiry date</td>
+                    <td class="col-2">{!expiryDate}</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Annual premium</td>
+                    <td class="col-2">
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!annualPremium}"/>
+                        </apex:outputText> 
+                        (inc. GST &amp; govt charges of which 
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!annualEmergencyServicesLevy}"/>
+                        </apex:outputText> 
+                        is for the Emergency Services Levy)</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Monthly premium *</td>
+                    <td class="col-2">
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!monthlyPremium}"/>
+                        </apex:outputText> 
+                        (inc. GST &amp; govt charges of which 
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!emergencyServicesLevy}"/>
+                        </apex:outputText> 
+                        is for the Emergency Services Levy)</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Agreed value amount <span class="smallLabel">(Includes all noted accessories)</span></td>
+                    <td class="col-2">
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!agreedAmount}"/>
+                        </apex:outputText> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-1">Excess</td>
+                    <td class="col-2">
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!excess}"/>
+                        </apex:outputText> Basic Excess plus 
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!optionalExcess}"/>
+                        </apex:outputText> Voluntary Excess^</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Additional Excess-free glass cover</td>
+                    <td class="col-2">{!glassCover}</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Additional rental car following accidental damage</td>
+                    <td class="col-2">{!rentalCarCover}</td>
+                </tr>
+            </table>
+
+            <p class="margin-bottom-20">Additional excesses that may also apply:</p>
+
+            <table class="margin-bottom-20">
+                <tr>
+                    <td class="col-1">Age excess</td>
+                    <td class="col-2">
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!ageExcess}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-1">Licence excess</td>
+                    <td class="col-2">
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!licenceExcess}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-1">Undisclosed driver excess</td>
+                    <td class="col-2">
+                        $<apex:outputText value="{0, number, ###,##0.00}">
+                            <apex:param value="{!undisclosedDriverExcess}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="margin-bottom-20">* Total premium for 12 months is 
+                $<apex:outputText value="{0, number, ###,##0.00}">
+                    <apex:param value="{!totalPremium}"/>
+                </apex:outputText> (inc. GST &amp; govt charges of which 
+                $<apex:outputText value="{0, number, ###,##0.00}">
+                    <apex:param value="{!totalEmergencyServicesLevy}"/>
+                </apex:outputText> is for the Emergency Services Levy)</p>
+
+            <hr />
+            <div style="page-break-before:always;"/>
+
+            <h1 class="margin-bottom-20">Vehicle Details</h1>
+
+            <table class="margin-bottom-20">
+                <tr>
+                    <td class="col-1">Vehicle</td>
+                    <td class="col-2">{!carInfo}</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Registration number</td>
+                    <td class="col-2">{!registrationNumber}</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Modifications and accessories</td>
+                    <td class="col-2">
+                        <apex:repeat value="{!accessories}" var="accessory">
+                            <apex:outputText value="- {!accessory}"/><br/>
+                        </apex:repeat>
+                    </td>
+                </tr>                
+            </table>
+
+            <p class="margin-bottom-30">You advised that the vehicle has not had performance modifications to the motor or suspension</p>
+
+            <h1 class="margin-bottom-20">Vehicle Usage</h1>
+
+            <div class="listInfo margin-bottom-50">
+                <p class="margin-bottom-20">{!vehicleUsage}</p>
+                <p class="margin-bottom-10">You advised us that the vehicle will not be used for:</p>
+                <ul>
+                    <li>
+                        <span class="circle">.</span><p>Rideshare where this has not been selected as the intended use or where the vehicle will be registered
+                        as available on a rideshare app for more than 35 hours per week;</p>
+                    </li>
+                    <li>
+                        <span class="circle">.</span><p>other forms of hire, fare or reward or as a taxi, rental, loan or driving school vehicle;</p>
+                    </li>
+                    <li>
+                        <span class="circle">.</span><p>motor sports, fast food delivery, emergency, security or law enforcement, transport of hazardous or
+                        inflammable goods or towing for income.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <h1 class="margin-bottom-20">Main Driver</h1>
+
+            <table>
+                <tr>
+                    <td class="col-1">Gender</td>
+                    <td class="col-2">{!mainDriverGender}</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Date of birth</td>
+                    <td class="col-2">{!mainDriverDateOfBirth}</td>
+                </tr>
+                <tr>
+                    <td class="col-1">Age licence obtained</td>
+                    <td class="col-2">{!mainDriverAgeLicenceObtained}</td>
+                </tr>   
+                <tr>
+                    <td class="col-1">Residential address</td>
+                    <td class="col-2">{!mainDriverAddress}</td>
+                </tr>                  
+            </table>
+
+            <div style="page-break-before:always;"/>
+
+            <h1 class="margin-bottom-30">Further Information</h1>
+
+            <div class="listInfo margin-bottom-50">
+                <apex:outputPanel layout="none" rendered="{!!isDriversUnder25}">
+                    <p>No additional drivers under 25 years of age will use this vehicle.</p>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!isDriversUnder25}">
+                    <p >Additional drivers under 25 years of age will use this vehicle.</p>
+                    <apex:outputPanel layout="none" rendered="{!!isDriversUnder25HaveOwnVehicle}">
+                        <ul>
+                            <li>
+                                <span class="circle">.</span><p>All additional drivers under 25 years of age do not own their own vehicle</p>
+                            </li>
+                        </ul>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!isDriversUnder25HaveOwnVehicle}">
+                        <ul>
+                            <li>
+                                <span class="circle">.</span><p>All additional drivers under 25 years of age own their own vehicle</p>
+                            </li>
+                        </ul>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                
+                <apex:outputPanel layout="none" rendered="{!isLicenceHeldMoreThan2Years}">
+                    <p class="margin-bottom-20">All intended drivers have held a full Australian drivers licence for more than 2 consecutive years.</p>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!!isLicenceHeldMoreThan2Years}">
+                    <p class="margin-bottom-20">Not all intended drivers have held a full Australian drivers licence for more than 2 consecutive years.</p>
+                </apex:outputPanel>
+                
+                <p class="margin-bottom-10">You advised that in the last 3 years, the intended drivers:</p>
+                <ul>
+                    <li>
+                        <span class="circle">.</span><p>have not had an application for, or contract of, motor insurance refused, declined or cancelled</p>
+                    </li>
+                    <li>
+                        <apex:outputPanel layout="none" rendered="{!!isLicenceSuspended}">
+                            <span class="circle">.</span><p>have not had their drivers licence or permit suspended, cancelled, restricted or endorsed with special conditions</p>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!isLicenceSuspended}">
+                            <span class="circle">.</span><p>have had their drivers licence or permit suspended, cancelled, restricted or endorsed with special conditions</p>
+                            <p>This has been 1 time</p>
+                        </apex:outputPanel>                        
+                    </li>
+                    <li>
+                        <span class="circle">.</span><p>have not been convicted of, or had any fines or penalties imposed for any criminal activity</p>
+                    </li>
+                    <li>
+                        <apex:outputPanel layout="none" rendered="{!!isLicenceSuspended}">
+                            <span class="circle">.</span><p>have not had any motor vehicle claims where you had to pay an excess</p>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!isLicenceSuspended}">
+                            <span class="circle">.</span><p>have had any motor vehicle claims where you had to pay an excess</p>
+                            <p>There have been {!claimsAmount} {!IF(isMoreThanOneClaim, "claims", "claim")}: {!claimsTypes}</p>
+                        </apex:outputPanel>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="warningContainer margin-bottom-40">
+                <span>Important!</span>
+                <p>To change any of the above information, please visit toyotainsurancequote.com.au/retrieve-quote</p>
+                <p>Note any changes may affect your premium.</p>
+            </div>
+
+            <p class="footerInfo margin-bottom-20">*Terms and conditions apply. This advice is general in nature and does not take into account your
+                objectives, financial situation or needs. Before making a decision about the quote and insurance policy
+                being offered, you should consider the appropriateness of the advice taking into account your own
+                objectives, financial situation and needs. Please refer to the quote, Product Disclosure Statement (PDS)
+                and Supplementary Product Disclosure Statement (SPDS) which, in conjunction with the quote, jointly
+                reflect the terms of and conditions of the insurance cover. Toyota Insurance purchased in a dealership
+                or via the Toyota Insurance National Customer Solutions Centre is issued by Toyota Finance Australia
+                Limited (TFAL) ABN 48 002 435 181, AFSL and Australian Credit Licence 392536. The insurer is Aioi Nissay
+                Dowa Insurance Company Australia Pty Ltd ABN 11 132 524 282, AFSL 443540 (Adica). If Toyota
+                Insurance is purchased online, the issuer and insurer is Adica.</p>
+            <p class="footerInfo">TIN182S</p>
+
+        </div>
+    </body>
+</apex:page>
