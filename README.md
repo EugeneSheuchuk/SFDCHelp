@@ -7,7 +7,7 @@
 [Source](https://github.com/EugeneSheuchuk/SFDCHelp/tree/master/CreatePDFFromVF)
 
 ## Scheduler that runs every minute
-[Source](https://github.com/EugeneSheuchuk/SFDCHelp/tree/master/CreatePDFFromVF)
+[Source](https://github.com/EugeneSheuchuk/SFDCHelp/tree/master/EveryMinuteScheduler)
 
 ## Apex help methods
 
