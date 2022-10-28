@@ -18,3 +18,8 @@ record.getSobject('ObjectName').get('FieldName');
 ```
 #### - getPickListValues
 Get all picklist values // Получить все значения пиклиста
+
+
+## CometD with LWC
+[Help post](https://www.sfdcbox.com/2021/02/cometd.html)\
+[Streaming API docs](https://blog.bessereau.eu/assets/pdfs/api_streaming.pdf) - see page 35
