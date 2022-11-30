@@ -29,4 +29,5 @@ Get all picklist values // Получить все значения пиклис
 /lightning/o/REO__c/new?defaultFieldValues=Application__c={!Borrower__c.ApplicationId__c},Borrower__c={!Borrower__c.Id}
 ```
 
-## Redirect internal user from current page to another
+## Redirect internal user from any internal page to another
+[Source](https://github.com/EugeneSheuchuk/SFDCHelp/tree/master/HiddenListeningComponent/aura/HiddenListeningCmp)
