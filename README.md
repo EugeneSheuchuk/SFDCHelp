@@ -23,3 +23,9 @@ Get all picklist values // Получить все значения пиклис
 ## CometD with LWC
 [Help post](https://www.sfdcbox.com/2021/02/cometd.html)\
 [Streaming API docs](https://blog.bessereau.eu/assets/pdfs/api_streaming.pdf) - see page 35
+
+## URL hacking - populating default value
+```
+/lightning/o/REO__c/new?defaultFieldValues=Application__c={!Borrower__c.ApplicationId__c},Borrower__c={!Borrower__c.Id}
+```
+
