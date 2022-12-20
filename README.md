@@ -31,3 +31,8 @@ Get all picklist values // Получить все значения пиклис
 
 ## Redirect internal user from any internal page to another
 [Source](https://github.com/EugeneSheuchuk/SFDCHelp/tree/master/HiddenListeningComponent/aura/HiddenListeningCmp)
+
+## Get User ACCESS TOKEN via developer console
+```
+System.debug(UserInfo.getOrganizationId().substring(0, 15) + '  ' +  UserInfo.getSessionId().substring(15));
+```
