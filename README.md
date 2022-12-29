@@ -36,3 +36,27 @@ Get all picklist values // Получить все значения пиклис
 ```
 System.debug(UserInfo.getOrganizationId().substring(0, 15) + '  ' +  UserInfo.getSessionId().substring(15));
 ```
+
+## Debug System User
+1) Get System User Id
+```
+SELECT Id, Name FROM User
+```
+2) Get DebugLevelId (Use tooling api)
+```
+SELECT Id, DebugLevelId, LogType FROM TraceFlag LIMIT 200
+```
+3) Workbench request URL
+```
+/services/data/v56.0/tooling/sobjects/TraceFlag/
+```
+4) Workbench request Body
+```
+{
+"TracedEntityId" : "0056e00000CwXNhAAN",
+"DebugLevelId" : "7dl2A000000Cb6FQAS",
+"LogType" : "USER_DEBUG",
+"StartDate" : "2022-12-28T12:00:01.000+0000",
+"ExpirationDate" : "2022-12-29T12:00:00.000+0000"
+}
+```
