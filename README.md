@@ -60,3 +60,9 @@ SELECT Id, DebugLevelId, LogType FROM TraceFlag LIMIT 200
 "ExpirationDate" : "2022-12-29T12:00:00.000+0000"
 }
 ```
+
+## Fast clearing SF logs from VSCode console
+```
+sfdx force:data:query -t -q "SELECT Id FROM ApexLog" -r "csv" > out.csv
+sfdx force:data:bulk:delete -s ApexLog -f out.csv
+```
