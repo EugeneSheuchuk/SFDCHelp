@@ -66,3 +66,8 @@ SELECT Id, DebugLevelId, LogType FROM TraceFlag LIMIT 200
 sfdx force:data:query -t -q "SELECT Id FROM ApexLog" -r "csv" > out.csv
 sfdx force:data:bulk:delete -s ApexLog -f out.csv
 ```
+## Force reload SF page without reloading browser tab
+```
+eval("$A.get('e.force:refreshView').fire();");
+```
+
