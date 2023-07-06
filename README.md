@@ -73,8 +73,7 @@ eval("$A.get('e.force:refreshView').fire();");
 ```
 
 ## Custom address with dependent picklists
-```
 [Source](https://beyondthecloud.dev/blog/country-state-dependent-picklist-in-apex)
-```
+
 
 
