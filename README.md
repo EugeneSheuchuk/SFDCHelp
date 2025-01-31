@@ -75,5 +75,11 @@ eval("$A.get('e.force:refreshView').fire();");
 ## Custom address with dependent picklists
 [Source](https://beyondthecloud.dev/blog/country-state-dependent-picklist-in-apex)
 
+## Login to the org by SID key
+https://example.sandbox.my.salesforce.com/secur/frontdoor.jsp?sid=exampleSID
 
+## Connect VSCode to the org via SID key (works until the key expires)
+1) If first connection then use SFDC: Authorize an Org using Session Id for creating an alias, esle go to the step 2;
+2) sf org login access-token --instance-url https://example.sandbox.my.salesforce.com;
+3) Enter a SID key.
 
