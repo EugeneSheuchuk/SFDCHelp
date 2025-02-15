@@ -84,4 +84,4 @@ https://example.sandbox.my.salesforce.com/secur/frontdoor.jsp?sid=exampleSID
 3) Enter a SID key.
 
 ## Generate Package.xml for your Salesforce Org
-sf project generate manifest --from-org <salesforce-org-alias>
+sf project generate manifest --output-dir ./manifest --from-org <orgname/alias>
