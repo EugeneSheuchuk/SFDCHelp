@@ -83,3 +83,5 @@ https://example.sandbox.my.salesforce.com/secur/frontdoor.jsp?sid=exampleSID
 2) sf org login access-token --instance-url https://example.sandbox.my.salesforce.com;
 3) Enter a SID key.
 
+## Generate Package.xml for your Salesforce Org
+sf project generate manifest --from-org <salesforce-org-alias>
