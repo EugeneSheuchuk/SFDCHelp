@@ -85,3 +85,6 @@ https://example.sandbox.my.salesforce.com/secur/frontdoor.jsp?sid=exampleSID
 
 ## Generate Package.xml for your Salesforce Org
 sf project generate manifest --output-dir ./manifest --from-org <orgname/alias>
+
+## Retrieving Profiles using the file-based Metadata API
+[Source](https://github.com/amtrack/sfdx-plugin-source-read)
